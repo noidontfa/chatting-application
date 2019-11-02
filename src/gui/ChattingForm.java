@@ -23,6 +23,7 @@ import Client.ClientHandler;
 import component.ComponentInformation;
 import component.DisplayJTable;
 import component.RoundJTextField;
+import constant.SystemConstants;
 import interfaceGUI.IDisplayMessage;
 import listener.MySaveFileActionListener;
 import listener.MySendFileActionListener;
@@ -177,9 +178,9 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 			} else {
 				tooltipModel.setHideImage(false);
 			}
-			if(message.getCommad().equals("msg")) {
+			if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
 				tooltipModel.setMsg(message.getMsg());
-			} else if (message.getCommad().equals("file")) {
+			} else if (message.getCommad().equals(SystemConstants.MESS_FILE)) {
 				tooltipModel.setMsg(message.getFileName());
 				tooltipModel.setFileTransfer(true);
 				tooltipModel.setFileBytes(message.getFileBytes());
@@ -208,9 +209,9 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		} else {
 			tooltipModel.setHideImage(false);
 		}	
-		if(message.getCommad().equals("msg")) {
+		if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
 			tooltipModel.setMsg(message.getMsg());
-		} else if (message.getCommad().equals("file")) {
+		} else if (message.getCommad().equals(SystemConstants.MESS_FILE)) {
 			tooltipModel.setMsg(message.getFileName());
 			tooltipModel.setFileTransfer(true);
 			tooltipModel.setFileBytes(message.getFileBytes());

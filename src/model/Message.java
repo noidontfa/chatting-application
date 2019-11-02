@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import constant.SystemConstants;
+
 public class Message  implements Serializable{
 	/**
 	 * 
@@ -26,14 +28,14 @@ public class Message  implements Serializable{
 		this.msg = msg;
 		this.setToUser(toUser);
 		this.timeDate = timeDate;
-		this.commad = "msg";
+		this.commad = SystemConstants.MESS_STRING;
 	}
 	
 	public Message(int id,File f, List<Integer> toUser, Date timeDate) throws IOException {
 		this.id = id;	
 		this.setToUser(toUser);
 		this.timeDate = timeDate;
-		this.commad = "file";
+		this.commad = SystemConstants.MESS_FILE;
 		this.fileName = f.getName();
 		FileInputStream fileInputStream = new FileInputStream(f);
 		this.fileBytes = fileInputStream.readAllBytes();
