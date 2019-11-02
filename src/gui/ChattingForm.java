@@ -168,29 +168,10 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 
 	@Override
 	public void writeMessageToGUI(Message message) {
-		//jTablemodel.addRow(new Object[] { message });
 		// this method receice mesage form user who is chatting with u!
 		if(this.roomSelected == message.getId()) {
 			User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
-			TooltipModel tooltipModel = new TooltipModel();	
-			if(this.uChat) {
-				tooltipModel.setHideImage(true);
-			} else {
-				tooltipModel.setHideImage(false);
-			}
-			if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
-				tooltipModel.setMsg(message.getMsg());
-			} else if (message.getCommad().equals(SystemConstants.MESS_FILE)) {
-				tooltipModel.setMsg(message.getFileName());
-				tooltipModel.setFileTransfer(true);
-				tooltipModel.setFileBytes(message.getFileBytes());
-			}	
-			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a"); 
-			tooltipModel.setTime(formatter.format(message.getTimeDate()));
-			tooltipModel.setName(currentUser.getNickName());
-			
-			table.addRow(tooltipModel);
-			
+			this.addRow(currentUser, message, uChat, true);		
 			this.meChat = false;
 			this.uChat = true;
 		}
@@ -200,15 +181,20 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 
 	@Override
 	public void displayMessage(Message message) {
-		//jTablemodel.addRow(new Object[] { message });
-		
-		TooltipModel tooltipModel = new TooltipModel();
-		tooltipModel.setLeft(false);
-		if(meChat) {
+		//jTablemodel.addRow(new Object[] { message });	
+		this.addRow(this.user, message, meChat,false);	
+		this.meChat = true;
+		this.uChat = false;
+	}
+	
+	public void addRow(User user, Message message, boolean whoChating, boolean isLeft) {
+		TooltipModel tooltipModel = new TooltipModel();	
+		tooltipModel.setLeft(isLeft);
+		if(whoChating) {
 			tooltipModel.setHideImage(true);
 		} else {
 			tooltipModel.setHideImage(false);
-		}	
+		}
 		if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
 			tooltipModel.setMsg(message.getMsg());
 		} else if (message.getCommad().equals(SystemConstants.MESS_FILE)) {
@@ -221,9 +207,6 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		tooltipModel.setName(user.getNickName());
 		
 		table.addRow(tooltipModel);
-		
-		this.meChat = true;
-		this.uChat = false;
 	}
 
 	public List<Integer> getToUserId() {
