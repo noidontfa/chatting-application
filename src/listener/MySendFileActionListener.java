@@ -28,12 +28,9 @@ public class MySendFileActionListener implements ActionListener {
 				User user = instance.getUser();
 				List<Integer> ids = instance.getToUserId();
 				if (!ids.isEmpty()) {
-					Message message = null;
-					for (int i = 0; i < ids.size(); i++) {
-						message = new Message(user.getId(), f, ids.get(i), new Date());
-						instance.getClientHandler().sendMessage(message);
-					}
+					Message message = new Message(user.getId(), f, ids, new Date());				
 					instance.displayMessage(message);
+					instance.getClientHandler().sendMessage(message);
 				} else {
 					System.out.println("Please select friends u want to message!");
 				}

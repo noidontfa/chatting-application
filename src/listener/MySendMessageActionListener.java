@@ -17,14 +17,11 @@ public class MySendMessageActionListener implements ActionListener{
 		ChattingForm instance = ChattingForm.getInstance();			
 		String msg = instance.getTxtMessage().getText();
 		User user = instance.getUser();
-		Message messageModel = null;
 		List<Integer> ids = instance.getToUserId();
 		if (!ids.isEmpty()) {
-			for(int i = 0; i < ids.size(); i++) {
-				messageModel = new Message(user.getId(),msg, ids.get(i), new Date());
-				instance.getClientHandler().sendMessage(messageModel);
-			}
+			Message messageModel = new Message(user.getId(),msg, ids, new Date());		
 			instance.displayMessage(messageModel);
+			instance.getClientHandler().sendMessage(messageModel);
 			instance.getTxtMessage().setText("");	
 		} else {
 			System.out.println("Please select a friends u want to message!");

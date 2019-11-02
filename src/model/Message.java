@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Message  implements Serializable{
 	/**
@@ -13,23 +15,23 @@ public class Message  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String msg;
-	private int toUser;
+	private List<Integer> toUser = new ArrayList<>();
 	private Date timeDate;
 	private String fileName;
 	private byte []fileBytes = new byte[3145728];
 	private String commad;
 	
-	public Message(int id, String msg, int toUser, Date timeDate) {
+	public Message(int id, String msg, List<Integer> toUser, Date timeDate) {
 		this.id = id;
 		this.msg = msg;
-		this.toUser = toUser;
+		this.setToUser(toUser);
 		this.timeDate = timeDate;
 		this.commad = "msg";
 	}
 	
-	public Message(int id,File f, int toUser, Date timeDate) throws IOException {
+	public Message(int id,File f, List<Integer> toUser, Date timeDate) throws IOException {
 		this.id = id;	
-		this.toUser = toUser;
+		this.setToUser(toUser);
 		this.timeDate = timeDate;
 		this.commad = "file";
 		this.fileName = f.getName();
@@ -43,12 +45,7 @@ public class Message  implements Serializable{
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-	public int getToUser() {
-		return toUser;
-	}
-	public void setToUser(int toUser) {
-		this.toUser = toUser;
-	}
+
 	public Date getTimeDate() {
 		return timeDate;
 	}
@@ -80,6 +77,14 @@ public class Message  implements Serializable{
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public List<Integer> getToUser() {
+		return toUser;
+	}
+
+	public void setToUser(List<Integer> toUser) {
+		this.toUser = toUser;
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.Map;
 
 import database.DatabaseUser;
@@ -42,12 +43,13 @@ public class ServerHandler implements Runnable{
 			try { 
 				Map<Integer, ServerHandler> map = Server.getInstance().getOnlineUsers();
 				Message message  = (Message)objectInputStream.readObject();
-					System.out.println("Server Recieved: " + message.getMsg());			
-					int id = message.getToUser();
-					if(map.containsKey(id)) {
-						map.get(id).sendMessageToClient(message);
-					}
-						
+					System.out.println("Server Recieved: " + message.getMsg());		
+					List<Integer> toUserId = message.getToUser();
+					for(int id : toUserId) {
+						if(map.containsKey(id)) {
+							map.get(id).sendMessageToClient(message);
+						}
+					}					
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}
