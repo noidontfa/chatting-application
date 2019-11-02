@@ -21,6 +21,9 @@ public class MySelectedFriendActionListener extends MouseAdapter{
 		List<Integer> id = new ArrayList<>();
 		id.add(info.getUser().getId());
 		instance.setToUserId(id);
+		instance.setRoomSelected(info.getUser().getId());
+		// load database form Server
+		instance.getTable().removeAllRow();
 		
 	}
 	

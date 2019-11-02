@@ -46,6 +46,12 @@ public class DisplayJTable extends JTable {
 		tableModel.setColumnCount(1);
 
 	}
+	
+	public void removeAllRow() {
+		while(tableModel.getRowCount() > 0 ) {
+			tableModel.removeRow(0);
+		}
+	}
 
 	public void addRow(TooltipModel tooltipModel) {
 		tableModel.addRow(new Object[] { tooltipModel });

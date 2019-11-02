@@ -59,6 +59,7 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private DisplayJTable table;
 	private boolean meChat = false;
 	private boolean uChat = false;
+	private int roomSelected;
 	/**
 	 * Create the frame.
 	 */
@@ -168,28 +169,31 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void writeMessageToGUI(Message message) {
 		//jTablemodel.addRow(new Object[] { message });
 		// this method receice mesage form user who is chatting with u!
-		User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
-		TooltipModel tooltipModel = new TooltipModel();	
-		if(this.uChat) {
-			tooltipModel.setHideImage(true);
-		} else {
-			tooltipModel.setHideImage(false);
+		if(this.roomSelected == message.getId()) {
+			User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
+			TooltipModel tooltipModel = new TooltipModel();	
+			if(this.uChat) {
+				tooltipModel.setHideImage(true);
+			} else {
+				tooltipModel.setHideImage(false);
+			}
+			if(message.getCommad().equals("msg")) {
+				tooltipModel.setMsg(message.getMsg());
+			} else if (message.getCommad().equals("file")) {
+				tooltipModel.setMsg(message.getFileName());
+				tooltipModel.setFileTransfer(true);
+				tooltipModel.setFileBytes(message.getFileBytes());
+			}	
+			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a"); 
+			tooltipModel.setTime(formatter.format(message.getTimeDate()));
+			tooltipModel.setName(currentUser.getNickName());
+			
+			table.addRow(tooltipModel);
+			
+			this.meChat = false;
+			this.uChat = true;
 		}
-		if(message.getCommad().equals("msg")) {
-			tooltipModel.setMsg(message.getMsg());
-		} else if (message.getCommad().equals("file")) {
-			tooltipModel.setMsg(message.getFileName());
-			tooltipModel.setFileTransfer(true);
-			tooltipModel.setFileBytes(message.getFileBytes());
-		}	
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a"); 
-		tooltipModel.setTime(formatter.format(message.getTimeDate()));
-		tooltipModel.setName(currentUser.getNickName());
 		
-		table.addRow(tooltipModel);
-		
-		this.meChat = false;
-		this.uChat = true;
 
 	}
 
@@ -227,5 +231,13 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 
 	public void setToUserId(List<Integer> toUserId) {
 		this.toUserId = toUserId;
+	}
+
+	public int getRoomSelected() {
+		return roomSelected;
+	}
+
+	public void setRoomSelected(int roomSelected) {
+		this.roomSelected = roomSelected;
 	}
 }
