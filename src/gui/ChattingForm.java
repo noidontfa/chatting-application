@@ -43,7 +43,6 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private JPanel contentPane;
 	private JTextField txtMessage;
 	DefaultListModel<String> jListModel = new DefaultListModel<>();
-	
 
 	private ClientHandler clientHandler;
 	private JButton btnSend;
@@ -61,12 +60,18 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private DisplayJTable table;
 	private boolean meChat = false;
 	private boolean uChat = false;
-	private int roomSelected;
-	private int myRoomId;
+	private int roomSelected; // this variable is handled by MySelectedFriendsListener.
+	private int myRoomId; // same
+
 	/**
 	 * Create the frame.
 	 */
 	public ChattingForm() {
+		initComponent();
+
+	}
+
+	public void initComponent() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
@@ -115,16 +120,15 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		panelMe = new JPanel();
 		panelMe.setBounds(64, 36, 195, 68);
 		contentPane.add(panelMe);
-		
+
 		panelChatting = new JPanel(new BorderLayout());
 		panelChatting.setBounds(269, 121, 443, 263);
 		table = new DisplayJTable();
 		table.addMouseListener(new MySaveFileActionListener());
-		JScrollPane scrollChatting = new JScrollPane(table,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scrollChatting = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		panelChatting.add(BorderLayout.CENTER,scrollChatting);
+		panelChatting.add(BorderLayout.CENTER, scrollChatting);
 		contentPane.add(panelChatting);
-		
 	}
 
 	public ClientHandler getClientHandler() {
@@ -148,8 +152,6 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		return user;
 	}
 
-
-
 	public int getMyRoomId() {
 		return myRoomId;
 	}
@@ -165,20 +167,29 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void setUser(User user) {
 		this.user = user;
 		// render friends
+		renderFriends();
+		// render groups
+		renderGroups();
+
+		clientHandler = new ClientHandler(Client.getInstance().getSocket(), this, user);
+		clientHandler.start();
+	}
+
+	public void renderFriends() {
 		for (int i = 0; i < user.getFriends().size(); i++) {
 			User friendUser = user.getFriends().get(i);
 			ComponentInformation info = new ComponentInformation();
-			List<User> privateUser = new ArrayList<>();
-			privateUser.add(friendUser);
-			info.setUsers(privateUser);
+			info.getUsers().add(friendUser);
 			info.setRoomId(friendUser.getId());
 			info.getLbNameRoom().setText(friendUser.getNickName());
 			info.setPrivateChat(true);
 			panelFriend.add(info);
 			panelFriend.add(Box.createVerticalStrut(1));
 		}
-		// render groups
-		for(int i = 0; i < user.getGroups().size(); i++) {
+	}
+
+	public void renderGroups() {
+		for (int i = 0; i < user.getGroups().size(); i++) {
 			Group group = user.getGroups().get(i);
 			ComponentInformation info = new ComponentInformation();
 			info.setRoomId(group.getId());
@@ -186,52 +197,49 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 			info.setUsers(group.getListGroup());
 			info.setPrivateChat(false);
 			panelFriend.add(info);
-			panelFriend.add(Box.createVerticalStrut(1));		
+			panelFriend.add(Box.createVerticalStrut(1));
 		}
-		clientHandler = new ClientHandler(Client.getInstance().getSocket(), this, user);
-		clientHandler.start();
 	}
 
 	@Override
 	public void writeMessageToGUI(Message message) {
 		// this method receice mesage form user who is chatting with u!
-		if(this.myRoomId == message.getId()) {
+		if (this.myRoomId == message.getId()) {
 			User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
-			this.addRow(currentUser, message, uChat, true);		
+			this.addRow(currentUser, message, uChat, true);
 			this.meChat = false;
 			this.uChat = true;
 		}
-		
 
 	}
 
 	@Override
 	public void displayMessage(Message message) {
-		//jTablemodel.addRow(new Object[] { message });	
-		this.addRow(this.user, message, meChat,false);	
+		// jTablemodel.addRow(new Object[] { message });
+		this.addRow(this.user, message, meChat, false);
 		this.meChat = true;
 		this.uChat = false;
 	}
-	
+
 	public void addRow(User user, Message message, boolean whoChating, boolean isLeft) {
-		TooltipModel tooltipModel = new TooltipModel();	
+		TooltipModel tooltipModel = new TooltipModel();
 		tooltipModel.setLeft(isLeft);
-		if(whoChating) {
+		if (whoChating) {
 			tooltipModel.setHideImage(true);
 		} else {
 			tooltipModel.setHideImage(false);
 		}
-		if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
+		if (message.getCommad().equals(SystemConstants.MESS_STRING)) {
 			tooltipModel.setMsg(message.getMsg());
 		} else if (message.getCommad().equals(SystemConstants.MESS_FILE)) {
 			tooltipModel.setMsg(message.getFileName());
 			tooltipModel.setFileTransfer(true);
 			tooltipModel.setFileBytes(message.getFileBytes());
-		}	
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a"); 
+		}
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm a");
 		tooltipModel.setTime(formatter.format(message.getTimeDate()));
 		tooltipModel.setName(user.getNickName());
-		
+
 		table.addRow(tooltipModel);
 	}
 
