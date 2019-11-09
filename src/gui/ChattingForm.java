@@ -28,6 +28,7 @@ import interfaceGUI.IDisplayMessage;
 import listener.MySaveFileActionListener;
 import listener.MySendFileActionListener;
 import listener.MySendMessageActionListener;
+import model.Group;
 import model.Message;
 import model.TooltipModel;
 import model.User;
@@ -61,6 +62,7 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private boolean meChat = false;
 	private boolean uChat = false;
 	private int roomSelected;
+	private int myRoomId;
 	/**
 	 * Create the frame.
 	 */
@@ -148,20 +150,44 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 
 
 
+	public int getMyRoomId() {
+		return myRoomId;
+	}
+
+	public void setMyRoomId(int myRoomId) {
+		this.myRoomId = myRoomId;
+	}
+
 	public DisplayJTable getTable() {
 		return table;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
+		// render friends
 		for (int i = 0; i < user.getFriends().size(); i++) {
 			User friendUser = user.getFriends().get(i);
-			ComponentInformation info = new ComponentInformation(friendUser);
+			ComponentInformation info = new ComponentInformation();
+			List<User> privateUser = new ArrayList<>();
+			privateUser.add(friendUser);
+			info.setUsers(privateUser);
+			info.setRoomId(friendUser.getId());
+			info.getLbNameRoom().setText(friendUser.getNickName());
+			info.setPrivateChat(true);
 			panelFriend.add(info);
 			panelFriend.add(Box.createVerticalStrut(1));
-			// jListModel.addElement(user.getFriends().get(i).getNickName());
 		}
-
+		// render groups
+		for(int i = 0; i < user.getGroups().size(); i++) {
+			Group group = user.getGroups().get(i);
+			ComponentInformation info = new ComponentInformation();
+			info.setRoomId(group.getId());
+			info.getLbNameRoom().setText(group.getName());
+			info.setUsers(group.getListGroup());
+			info.setPrivateChat(false);
+			panelFriend.add(info);
+			panelFriend.add(Box.createVerticalStrut(1));		
+		}
 		clientHandler = new ClientHandler(Client.getInstance().getSocket(), this, user);
 		clientHandler.start();
 	}
@@ -169,7 +195,7 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	@Override
 	public void writeMessageToGUI(Message message) {
 		// this method receice mesage form user who is chatting with u!
-		if(this.roomSelected == message.getId()) {
+		if(this.myRoomId == message.getId()) {
 			User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
 			this.addRow(currentUser, message, uChat, true);		
 			this.meChat = false;

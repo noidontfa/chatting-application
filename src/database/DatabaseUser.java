@@ -3,6 +3,7 @@ package database;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Group;
 import model.User;
 
 public class DatabaseUser {
@@ -17,7 +18,9 @@ public class DatabaseUser {
 		
 		for(int i = 0; i < users.size(); i++) {
 			users.get(i).setFriends(users);
-		}
+			users.get(i).getGroups().add(new Group(0, "Group Test", users));
+		}		
+		
 	}
 	
 	public User getUser(User user) {

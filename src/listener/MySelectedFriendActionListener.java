@@ -16,12 +16,18 @@ public class MySelectedFriendActionListener extends MouseAdapter{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		ComponentInformation info = (ComponentInformation)e.getSource();
-		System.out.println("Selected: " +info.getUser().getNickName());
 		ChattingForm instance = ChattingForm.getInstance();
-		List<Integer> id = new ArrayList<>();
-		id.add(info.getUser().getId());
-		instance.setToUserId(id);
-		instance.setRoomSelected(info.getUser().getId());
+		List<Integer> ids = new ArrayList<>();
+		for(int i = 0; i < info.getUsers().size(); i++) {
+			ids.add(info.getUsers().get(i).getId());
+		}
+		instance.setToUserId(ids);
+		instance.setRoomSelected(info.getRoomId());
+		if(info.isPrivateChat()) {
+			instance.setMyRoomId(instance.getUser().getId());
+		} else {
+			instance.setMyRoomId(info.getRoomId());
+		}
 		// load database form Server
 		instance.getTable().removeAllRow();
 		

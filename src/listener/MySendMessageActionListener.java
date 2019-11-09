@@ -7,7 +7,6 @@ import java.util.List;
 
 import gui.ChattingForm;
 import model.Message;
-import model.User;
 
 public class MySendMessageActionListener implements ActionListener{
 
@@ -16,10 +15,9 @@ public class MySendMessageActionListener implements ActionListener{
 		// event sent message
 		ChattingForm instance = ChattingForm.getInstance();			
 		String msg = instance.getTxtMessage().getText();
-		User user = instance.getUser();
 		List<Integer> ids = instance.getToUserId();
 		if (!ids.isEmpty()) {
-			Message messageModel = new Message(user.getId(),msg, ids, new Date());		
+			Message messageModel = new Message(instance.getRoomSelected(),msg, ids, new Date());		
 			instance.displayMessage(messageModel);
 			instance.getClientHandler().sendMessage(messageModel);
 			instance.getTxtMessage().setText("");	

@@ -29,6 +29,7 @@ public class Message  implements Serializable{
 		this.setToUser(toUser);
 		this.timeDate = timeDate;
 		this.commad = SystemConstants.MESS_STRING;
+	
 	}
 	
 	public Message(int id,File f, List<Integer> toUser, Date timeDate) throws IOException {
@@ -88,7 +89,8 @@ public class Message  implements Serializable{
 	public void setToUser(List<Integer> toUser) {
 		this.toUser = toUser;
 	}
-	
+
+
 	
 	
 }

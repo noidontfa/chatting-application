@@ -14,7 +14,9 @@ public class User implements Serializable {
 	private String username;
 	private String password;
 	private List<User> friends = new ArrayList<>();
+	private List<Group> groups = new ArrayList<>();
 	private boolean isAuthenticated = false;
+	
 	public User() {
 		
 	}
@@ -61,6 +63,14 @@ public class User implements Serializable {
 	}
 	public void setFriends(List<User> friends) {
 		this.friends = friends;
+	}
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 	
