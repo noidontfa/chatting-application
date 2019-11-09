@@ -11,7 +11,6 @@ import javax.swing.JFileChooser;
 
 import gui.ChattingForm;
 import model.Message;
-import model.User;
 
 public class MySendFileActionListener implements ActionListener {
 
@@ -25,10 +24,9 @@ public class MySendFileActionListener implements ActionListener {
 		if (temp != JFileChooser.CANCEL_OPTION) {
 			f = chooser.getSelectedFile();
 			try {
-				User user = instance.getUser();
 				List<Integer> ids = instance.getToUserId();
 				if (!ids.isEmpty()) {
-					Message message = new Message(user.getId(), f, ids, new Date());				
+					Message message = new Message(instance.getRoomSelected(), f, ids, new Date());				
 					instance.displayMessage(message);
 					instance.getClientHandler().sendMessage(message);
 				} else {
