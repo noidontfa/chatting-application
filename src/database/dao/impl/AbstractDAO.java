@@ -1,4 +1,4 @@
-package dao.impl;
+package database.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.GenericDAO;
-import mapper.RowMapper;
+import database.dao.GenericDAO;
+import database.mapper.RowMapper;
 
 public class AbstractDAO<T> implements GenericDAO<T> {
 

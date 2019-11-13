@@ -1,10 +1,11 @@
-package service;
+package database.service;
 
 import java.util.List;
 
-import model.database.UserModel;
+import database.model.UserModel;
 
 public interface IUserService {
 	UserModel findByUsernameAndPassword(String username,String password);
 	List<UserModel> findFriendsById(Long id);
+	List<UserModel> findGroupUsersById(Long id, Long userId);
 }

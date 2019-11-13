@@ -1,9 +1,9 @@
-package mapper;
+package database.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.database.UserModel;
+import database.model.UserModel;
 
 public class UserMapper implements RowMapper<UserModel>{
 

@@ -1,4 +1,4 @@
-package mapper;
+package database.mapper;
 
 import java.sql.ResultSet;
 

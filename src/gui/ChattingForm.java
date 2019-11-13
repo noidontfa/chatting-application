@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,7 +44,6 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private static ChattingForm instance;
 	private JPanel contentPane;
 	private JTextField txtMessage;
-	DefaultListModel<String> jListModel = new DefaultListModel<>();
 
 	private ClientHandler clientHandler;
 	private JButton btnSend;

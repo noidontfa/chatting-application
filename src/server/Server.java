@@ -11,11 +11,15 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import converter.UserConverter;
-import model.database.UserModel;
+import database.converter.GroupConverter;
+import database.converter.UserConverter;
+import database.model.GroupModel;
+import database.model.UserModel;
+import database.service.IGroupService;
+import database.service.IUserService;
+import database.service.impl.GroupService;
+import database.service.impl.UserService;
 import model.transfer.User;
-import service.IUserService;
-import service.impl.UserService;
 
 public class Server extends Thread{
 	private static Server instance;
@@ -31,7 +35,10 @@ public class Server extends Thread{
 	//database tam
 //	DatabaseUser databaseUser = new DatabaseUser();
 	private IUserService userService = new UserService();
+	private IGroupService groupService = new GroupService();
 	private UserConverter userConverter = new UserConverter();
+	private GroupConverter groupConverter = new GroupConverter();
+	
 	//
 
 	@Override
@@ -77,16 +84,22 @@ public class Server extends Thread{
 		
 		try {
 			User user = (User) objectInputStream.readObject();
-			//user = databaseUser.getUser(user);
-			UserModel userModel = userService.findByUsernameAndPassword(user.getUsername(),user.getPassword());
-			
-			
+			UserModel userModel = userService.findByUsernameAndPassword(user.getUsername(),user.getPassword());			
 			if (userModel != null) {
 				// we have user
+				Long userId = userModel.getId();
 				user = userConverter.toUserTransfer(userModel);
-				List<UserModel> listFriends = userService.findFriendsById(Long.valueOf(user.getId()));
+				List<UserModel> listFriends = userService.findFriendsById(userId);
 				for(UserModel friend : listFriends) {
 					user.getFriends().add(userConverter.toUserTransfer(friend));
+				}
+				
+				List<GroupModel> listGroups = groupService.findGroupsById(userId);
+				for(GroupModel group : listGroups) {
+					List<UserModel> users = userService.findGroupUsersById(group.getId(), userId);
+					group.setListUsers(users);
+					
+					user.getGroups().add(groupConverter.toGroupTransfer(group));
 				}
 				
 				objectOutputStream.writeObject(user);

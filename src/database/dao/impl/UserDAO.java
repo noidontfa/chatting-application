@@ -1,10 +1,10 @@
-package dao.impl;
+package database.dao.impl;
 
 import java.util.List;
 
-import dao.IUserDAO;
-import mapper.UserMapper;
-import model.database.UserModel;
+import database.dao.IUserDAO;
+import database.mapper.UserMapper;
+import database.model.UserModel;
 
 public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO{
 
@@ -26,4 +26,16 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO{
 		List<UserModel> users = query(sql.toString(), new UserMapper(), id);
 		return users;
 	}
+
+	@Override
+	public List<UserModel> findGroupUsersById(Long id, Long userId) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT user_id as id, nickname, username, password FROM _group_member ");
+		sql.append("INNER JOIN _users ON _group_member.user_id = _users.id ");
+		sql.append("WHERE group_id = ? AND user_id != ?");
+		List<UserModel> users = query(sql.toString(), new UserMapper(), id, userId);
+		return users;
+	}
+
+	
 }

@@ -1,4 +1,4 @@
-package model.database;
+package database.model;
 
 public class UserModel {
 	

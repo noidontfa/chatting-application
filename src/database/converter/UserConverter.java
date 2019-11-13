@@ -1,6 +1,6 @@
-package converter;
+package database.converter;
 
-import model.database.UserModel;
+import database.model.UserModel;
 import model.transfer.User;
 
 public class UserConverter {

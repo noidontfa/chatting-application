@@ -1,11 +1,11 @@
-package service.impl;
+package database.service.impl;
 
 import java.util.List;
 
-import dao.IUserDAO;
-import dao.impl.UserDAO;
-import model.database.UserModel;
-import service.IUserService;
+import database.dao.IUserDAO;
+import database.dao.impl.UserDAO;
+import database.model.UserModel;
+import database.service.IUserService;
 
 public class UserService implements IUserService{
 
@@ -23,6 +23,11 @@ public class UserService implements IUserService{
 	@Override
 	public List<UserModel> findFriendsById(Long id) {
 		return userDAO.findFriendsById(id);
+	}
+
+	@Override
+	public List<UserModel> findGroupUsersById(Long id, Long userId) {
+		return userDAO.findGroupUsersById(id, userId);
 	}
 
 }
