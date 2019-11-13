@@ -18,7 +18,7 @@ public class MyLoginActionListener  implements ActionListener{
 		String username = LoginForm.getInstance().getTxtUserName().getText();
 		String password = LoginForm.getInstance().getTxtPassword().getText();
 		User user = new User();
-		user.setId((long) -1);
+		user.setId(-1);
 		user.setPassword(password);
 		user.setUsername(username);
 		Client client = Client.getInstance();

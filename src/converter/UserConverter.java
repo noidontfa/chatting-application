@@ -8,7 +8,7 @@ public class UserConverter {
 	public User toUserTransfer(UserModel userModel) {
 		
 		User userTransfer = new User();
-		userTransfer.setId(userModel.getId());
+		userTransfer.setId(userModel.getId().intValue());
 		userTransfer.setNickName(userModel.getNickname());
 		userTransfer.setUsername(userModel.getUsername());
 		userTransfer.setPassword(userModel.getPassword());

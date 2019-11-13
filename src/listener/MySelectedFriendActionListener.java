@@ -17,7 +17,7 @@ public class MySelectedFriendActionListener extends MouseAdapter{
 	public void mousePressed(MouseEvent e) {
 		ComponentInformation info = (ComponentInformation)e.getSource();
 		ChattingForm instance = ChattingForm.getInstance();
-		List<Long> ids = new ArrayList<>();
+		List<Integer> ids = new ArrayList<>();
 		for(int i = 0; i < info.getUsers().size(); i++) {
 			ids.add(info.getUsers().get(i).getId());
 		}

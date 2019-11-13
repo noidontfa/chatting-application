@@ -9,7 +9,7 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Long id;
+	private int id;
 	private String nickName;
 	private String username;
 	private String password;
@@ -21,16 +21,16 @@ public class User implements Serializable {
 		
 	}
 	
-	public User(Long id, String nickName, String username, String password) {
+	public User(int id, String nickName, String username, String password) {
 		this.id = id;
 		this.nickName = nickName;
 		this.username = username;
 		this.password = password;
 	}
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long i) {
+	public void setId(int i) {
 		this.id = i;
 	}
 	public String getNickName() {

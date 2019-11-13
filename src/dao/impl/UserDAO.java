@@ -15,4 +15,15 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO{
 		List<UserModel> user = query(sql, new UserMapper(), username,password);
 		return user.isEmpty() ? null : user.get(0);
 	}
+
+	@Override
+	public List<UserModel> findFriendsById(Long id) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT _users.id, _users.nickname, _users.username, _users.password ");
+		sql.append("FROM _users INNER JOIN _friends	ON _friends.friend_user_id = _users.id ");
+		sql.append("WHERE user_id = ?");
+		
+		List<UserModel> users = query(sql.toString(), new UserMapper(), id);
+		return users;
+	}
 }

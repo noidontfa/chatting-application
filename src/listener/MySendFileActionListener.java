@@ -24,7 +24,7 @@ public class MySendFileActionListener implements ActionListener {
 		if (temp != JFileChooser.CANCEL_OPTION) {
 			f = chooser.getSelectedFile();
 			try {
-				List<Long> ids = instance.getToUserId();
+				List<Integer> ids = instance.getToUserId();
 				if (!ids.isEmpty()) {
 					Message message = new Message(instance.getRoomSelected(), f, ids, new Date());				
 					instance.displayMessage(message);

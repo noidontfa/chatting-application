@@ -9,13 +9,13 @@ public class Group implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Long id;
+	private int id;
 	private String name;
 	private List<User> ListGroup = new ArrayList<>();
 	
 	
 
-	public Group(Long id, String name, List<User> listGroup) {
+	public Group(int id, String name, List<User> listGroup) {
 		this.id = id;
 		this.name = name;
 		this.ListGroup = listGroup;
@@ -26,10 +26,10 @@ public class Group implements Serializable {
 	public void setListGroup(List<User> listGroup) {
 		ListGroup = listGroup;
 	}
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {

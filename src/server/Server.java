@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,7 +23,7 @@ public class Server extends Thread{
 	private ServerSocket server;
 	
 	private boolean doExecute = false;
-	private static Map<Long, ServerHandler> onlineUsers = new HashMap<>();
+	private static Map<Integer, ServerHandler> onlineUsers = new HashMap<>();
 
 
 	private static ExecutorService pool = Executors.newFixedThreadPool(500);
@@ -78,10 +79,16 @@ public class Server extends Thread{
 			User user = (User) objectInputStream.readObject();
 			//user = databaseUser.getUser(user);
 			UserModel userModel = userService.findByUsernameAndPassword(user.getUsername(),user.getPassword());
-			user = userConverter.toUserTransfer(userModel);
 			
-			if (user.getId() != -1) {
+			
+			if (userModel != null) {
 				// we have user
+				user = userConverter.toUserTransfer(userModel);
+				List<UserModel> listFriends = userService.findFriendsById(Long.valueOf(user.getId()));
+				for(UserModel friend : listFriends) {
+					user.getFriends().add(userConverter.toUserTransfer(friend));
+				}
+				
 				objectOutputStream.writeObject(user);
 
 				ServerHandler clientHandler = new ServerHandler(socket);
@@ -107,7 +114,7 @@ public class Server extends Thread{
 		return instance;
 	}
 	
-	public Map<Long, ServerHandler> getOnlineUsers() {
+	public Map<Integer, ServerHandler> getOnlineUsers() {
 		return onlineUsers;
 	}
 

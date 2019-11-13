@@ -22,7 +22,7 @@ public class ComponentInformation extends JPanel {
 	/**
 	 * 
 	 */
-	private Long roomId;
+	private int roomId;
 	private static final long serialVersionUID = 1L;
 	private List<User> users = new ArrayList<>();
 	private boolean privateChat = true;
@@ -103,11 +103,11 @@ public class ComponentInformation extends JPanel {
 		lbImage = new JLabel(new ImageIcon(scaleImage));
 	}
 
-	public Long getRoomId() {
+	public int getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Long roomId) {
+	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}
 

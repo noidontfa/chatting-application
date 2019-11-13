@@ -40,8 +40,9 @@ public class ClientHandler extends Thread{
 		while(true) {
 			try {
 				Message messageModel = null;
-				messageModel = (Message)objectInputStream.readObject();
+				messageModel = (Message)objectInputStream.readObject();			
 				gui.writeMessageToGUI(messageModel);
+				
 				
 			
 				

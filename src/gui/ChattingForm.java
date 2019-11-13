@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -58,12 +60,13 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	 * Launch the application.
 	 */
 	private User user;
-	private List<Long> toUserId = new ArrayList<>();
+	private Map<Integer, User> respondent = new HashMap<>();
+	private List<Integer> toUserId = new ArrayList<>();
 	private DisplayJTable table;
 	private boolean meChat = false;
 	private boolean uChat = false;
-	private Long roomSelected; // this variable is handled by MySelectedFriendsListener.
-	private Long myRoomId; // same
+	private int roomSelected; // this variable is handled by MySelectedFriendsListener.
+	private int myRoomId; // same
 
 	/**
 	 * Create the frame.
@@ -156,11 +159,11 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		return user;
 	}
 
-	public Long getMyRoomId() {
+	public int getMyRoomId() {
 		return myRoomId;
 	}
 
-	public void setMyRoomId(Long myRoomId) {
+	public void setMyRoomId(int myRoomId) {
 		this.myRoomId = myRoomId;
 	}
 
@@ -183,6 +186,7 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void renderFriends() {
 		for (int i = 0; i < user.getFriends().size(); i++) {
 			User friendUser = user.getFriends().get(i);
+			respondent.put(i, friendUser);
 			ComponentInformation info = new ComponentInformation();
 			info.getUsers().add(friendUser);
 			info.setRoomId(friendUser.getId());
@@ -209,11 +213,17 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	@Override
 	public void writeMessageToGUI(Message message) {
 		// this method receice mesage form user who is chatting with u!
-		if (this.myRoomId == message.getId()) {
-			User currentUser = user.getFriends().stream().filter((u) -> u.getId() == message.getId()).findFirst().get();
-			this.addRow(currentUser, message, uChat, true);
-			this.meChat = false;
-			this.uChat = true;
+		
+		int respondentId = message.getId();
+		if (this.myRoomId == respondentId) {
+//				List<User> currentUser = this.user.getFriends().stream()
+//						.filter((u) -> u.getId() == message.getId())
+//						.collect(Collectors.toList());			
+				this.addRow(respondent.get(respondentId), message, uChat, true);
+				this.meChat = false;
+				this.uChat = true;
+			
+		
 		}
 
 	}
@@ -248,19 +258,19 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		table.addRow(tooltipModel);
 	}
 
-	public List<Long> getToUserId() {
+	public List<Integer> getToUserId() {
 		return toUserId;
 	}
 
-	public void setToUserId(List<Long> toUserId) {
+	public void setToUserId(List<Integer> toUserId) {
 		this.toUserId = toUserId;
 	}
 
-	public Long getRoomSelected() {
+	public int getRoomSelected() {
 		return roomSelected;
 	}
 
-	public void setRoomSelected(Long roomSelected) {
+	public void setRoomSelected(int roomSelected) {
 		this.roomSelected = roomSelected;
 	}
 }

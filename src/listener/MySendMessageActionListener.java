@@ -15,7 +15,7 @@ public class MySendMessageActionListener implements ActionListener{
 		// event sent message
 		ChattingForm instance = ChattingForm.getInstance();			
 		String msg = instance.getTxtMessage().getText();
-		List<Long> ids = instance.getToUserId();
+		List<Integer> ids = instance.getToUserId();
 		if (!ids.isEmpty()) {
 			Message messageModel = new Message(instance.getRoomSelected(),msg, ids, new Date());		
 			instance.displayMessage(messageModel);

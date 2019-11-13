@@ -39,12 +39,12 @@ public class ServerHandler implements Runnable{
 	@Override
 	public void run() {
 		while(true) {
-			try { 
-				Map<Long, ServerHandler> map = Server.getInstance().getOnlineUsers();
+			try { 	
+				Map<Integer, ServerHandler> map = Server.getInstance().getOnlineUsers();
 				Message message  = (Message)objectInputStream.readObject();
 					System.out.println("Server Recieved: " + message.getMsg());		
-					List<Long> toUserId = message.getToUser();
-					for(Long id : toUserId) {
+					List<Integer> toUserId = message.getToUser();
+					for(Integer id : toUserId) {
 						if(map.containsKey(id)) {
 							map.get(id).sendMessageToClient(message);
 						}
