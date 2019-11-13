@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 
 import gui.ChattingForm;
-import model.TooltipModel;
+import model.transfer.TooltipModel;
 
 
 public class MySaveFileActionListener extends MouseAdapter {

@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
-import model.TooltipModel;
+import model.transfer.TooltipModel;
 
 public class Tooltip extends JPanel {
 

@@ -6,8 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import interfaceGUI.IDisplayMessage;
-import model.Message;
-import model.User;
+import model.transfer.Message;
+import model.transfer.User;
 
 public class ClientHandler extends Thread{
 	private Socket socket = null;

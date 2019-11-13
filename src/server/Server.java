@@ -10,8 +10,11 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import database.DatabaseUser;
-import model.User;
+import converter.UserConverter;
+import model.database.UserModel;
+import model.transfer.User;
+import service.IUserService;
+import service.impl.UserService;
 
 public class Server extends Thread{
 	private static Server instance;
@@ -19,13 +22,15 @@ public class Server extends Thread{
 	private ServerSocket server;
 	
 	private boolean doExecute = false;
-	private static Map<Integer, ServerHandler> onlineUsers = new HashMap<>();
+	private static Map<Long, ServerHandler> onlineUsers = new HashMap<>();
 
 
 	private static ExecutorService pool = Executors.newFixedThreadPool(500);
  	
 	//database tam
-	DatabaseUser databaseUser = new DatabaseUser();
+//	DatabaseUser databaseUser = new DatabaseUser();
+	private IUserService userService = new UserService();
+	private UserConverter userConverter = new UserConverter();
 	//
 
 	@Override
@@ -71,7 +76,10 @@ public class Server extends Thread{
 		
 		try {
 			User user = (User) objectInputStream.readObject();
-			user = databaseUser.getUser(user);
+			//user = databaseUser.getUser(user);
+			UserModel userModel = userService.findByUsernameAndPassword(user.getUsername(),user.getPassword());
+			user = userConverter.toUserTransfer(userModel);
+			
 			if (user.getId() != -1) {
 				// we have user
 				objectOutputStream.writeObject(user);
@@ -99,7 +107,7 @@ public class Server extends Thread{
 		return instance;
 	}
 	
-	public Map<Integer, ServerHandler> getOnlineUsers() {
+	public Map<Long, ServerHandler> getOnlineUsers() {
 		return onlineUsers;
 	}
 

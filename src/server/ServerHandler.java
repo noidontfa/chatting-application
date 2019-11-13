@@ -7,15 +7,14 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Map;
 
-import database.DatabaseUser;
-import model.Message;
+import model.transfer.Message;
 
 public class ServerHandler implements Runnable{
 	private Socket socket;
 	private ObjectInputStream objectInputStream;
 	private ObjectOutputStream objectOutputStream;
 	
-	DatabaseUser databaseUser = new DatabaseUser();
+//	DatabaseUser databaseUser = new DatabaseUser();
 	
 	public ServerHandler(Socket socket) {
 		this.socket = socket;
@@ -41,11 +40,11 @@ public class ServerHandler implements Runnable{
 	public void run() {
 		while(true) {
 			try { 
-				Map<Integer, ServerHandler> map = Server.getInstance().getOnlineUsers();
+				Map<Long, ServerHandler> map = Server.getInstance().getOnlineUsers();
 				Message message  = (Message)objectInputStream.readObject();
 					System.out.println("Server Recieved: " + message.getMsg());		
-					List<Integer> toUserId = message.getToUser();
-					for(int id : toUserId) {
+					List<Long> toUserId = message.getToUser();
+					for(Long id : toUserId) {
 						if(map.containsKey(id)) {
 							map.get(id).sendMessageToClient(message);
 						}

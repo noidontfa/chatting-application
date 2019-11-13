@@ -15,14 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import listener.MySelectedFriendActionListener;
-import model.User;
+import model.transfer.User;
 
 public class ComponentInformation extends JPanel {
 
 	/**
 	 * 
 	 */
-	private int roomId;
+	private Long roomId;
 	private static final long serialVersionUID = 1L;
 	private List<User> users = new ArrayList<>();
 	private boolean privateChat = true;
@@ -103,11 +103,11 @@ public class ComponentInformation extends JPanel {
 		lbImage = new JLabel(new ImageIcon(scaleImage));
 	}
 
-	public int getRoomId() {
+	public Long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(int roomId) {
+	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
 

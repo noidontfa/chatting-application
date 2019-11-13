@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 
 import gui.ChattingForm;
-import model.Message;
+import model.transfer.Message;
 
 public class MySendFileActionListener implements ActionListener {
 
@@ -24,7 +24,7 @@ public class MySendFileActionListener implements ActionListener {
 		if (temp != JFileChooser.CANCEL_OPTION) {
 			f = chooser.getSelectedFile();
 			try {
-				List<Integer> ids = instance.getToUserId();
+				List<Long> ids = instance.getToUserId();
 				if (!ids.isEmpty()) {
 					Message message = new Message(instance.getRoomSelected(), f, ids, new Date());				
 					instance.displayMessage(message);

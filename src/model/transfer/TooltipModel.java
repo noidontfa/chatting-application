@@ -1,4 +1,4 @@
-package model;
+package model.transfer;
 
 public class TooltipModel {
 	// private byte[] Image;

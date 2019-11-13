@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import Client.Client;
 import gui.ChattingForm;
 import gui.LoginForm;
-import model.User;
+import model.transfer.User;
 
 public class MyLoginActionListener  implements ActionListener{
 
@@ -18,7 +18,7 @@ public class MyLoginActionListener  implements ActionListener{
 		String username = LoginForm.getInstance().getTxtUserName().getText();
 		String password = LoginForm.getInstance().getTxtPassword().getText();
 		User user = new User();
-		user.setId(-1);
+		user.setId((long) -1);
 		user.setPassword(password);
 		user.setUsername(username);
 		Client client = Client.getInstance();

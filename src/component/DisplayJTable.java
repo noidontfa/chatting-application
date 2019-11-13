@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import model.TooltipModel;
+import model.transfer.TooltipModel;
 
 public class DisplayJTable extends JTable {
 	/**

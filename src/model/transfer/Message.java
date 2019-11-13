@@ -1,4 +1,4 @@
-package model;
+package model.transfer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,15 +15,15 @@ public class Message  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Long id;
 	private String msg;
-	private List<Integer> toUser = new ArrayList<>();
+	private List<Long> toUser = new ArrayList<>();
 	private Date timeDate;
 	private String fileName;
 	private byte []fileBytes = new byte[3145728];
 	private String commad;
 	
-	public Message(int id, String msg, List<Integer> toUser, Date timeDate) {
+	public Message(Long id, String msg, List<Long> toUser, Date timeDate) {
 		this.id = id;
 		this.msg = msg;
 		this.setToUser(toUser);
@@ -32,7 +32,7 @@ public class Message  implements Serializable{
 	
 	}
 	
-	public Message(int id,File f, List<Integer> toUser, Date timeDate) throws IOException {
+	public Message(Long id,File f, List<Long> toUser, Date timeDate) throws IOException {
 		this.id = id;	
 		this.setToUser(toUser);
 		this.timeDate = timeDate;
@@ -55,10 +55,10 @@ public class Message  implements Serializable{
 	public void setTimeDate(Date timeDate) {
 		this.timeDate = timeDate;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public byte[] getFileBytes() {
@@ -82,11 +82,11 @@ public class Message  implements Serializable{
 		this.fileName = fileName;
 	}
 
-	public List<Integer> getToUser() {
+	public List<Long> getToUser() {
 		return toUser;
 	}
 
-	public void setToUser(List<Integer> toUser) {
+	public void setToUser(List<Long> toUser) {
 		this.toUser = toUser;
 	}
 

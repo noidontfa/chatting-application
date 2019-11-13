@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import Client.Client;
 import Client.ClientHandler;
 import component.ComponentInformation;
+import component.ComponentMyInformation;
 import component.DisplayJTable;
 import component.RoundJTextField;
 import constant.SystemConstants;
@@ -28,10 +29,10 @@ import interfaceGUI.IDisplayMessage;
 import listener.MySaveFileActionListener;
 import listener.MySendFileActionListener;
 import listener.MySendMessageActionListener;
-import model.Group;
-import model.Message;
-import model.TooltipModel;
-import model.User;
+import model.transfer.Group;
+import model.transfer.Message;
+import model.transfer.TooltipModel;
+import model.transfer.User;
 
 public class ChattingForm extends JFrame implements IDisplayMessage {
 
@@ -52,16 +53,17 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private JPanel panelFriendInfo;
 	private JPanel panelMe;
 	private JPanel panelChatting;
+	private ComponentMyInformation myInformation;
 	/**
 	 * Launch the application.
 	 */
 	private User user;
-	private List<Integer> toUserId = new ArrayList<>();
+	private List<Long> toUserId = new ArrayList<>();
 	private DisplayJTable table;
 	private boolean meChat = false;
 	private boolean uChat = false;
-	private int roomSelected; // this variable is handled by MySelectedFriendsListener.
-	private int myRoomId; // same
+	private Long roomSelected; // this variable is handled by MySelectedFriendsListener.
+	private Long myRoomId; // same
 
 	/**
 	 * Create the frame.
@@ -117,8 +119,10 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		panelFriendInfo.setBounds(269, 36, 443, 75);
 		contentPane.add(panelFriendInfo);
 
-		panelMe = new JPanel();
+		panelMe = new JPanel(new BorderLayout());
 		panelMe.setBounds(64, 36, 195, 68);
+		myInformation = new ComponentMyInformation();
+		panelMe.add(myInformation,BorderLayout.CENTER);
 		contentPane.add(panelMe);
 
 		panelChatting = new JPanel(new BorderLayout());
@@ -152,11 +156,11 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		return user;
 	}
 
-	public int getMyRoomId() {
+	public Long getMyRoomId() {
 		return myRoomId;
 	}
 
-	public void setMyRoomId(int myRoomId) {
+	public void setMyRoomId(Long myRoomId) {
 		this.myRoomId = myRoomId;
 	}
 
@@ -171,6 +175,7 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		// render groups
 		renderGroups();
 
+		myInformation.getLbUsername().setText(user.getNickName());
 		clientHandler = new ClientHandler(Client.getInstance().getSocket(), this, user);
 		clientHandler.start();
 	}
@@ -243,19 +248,19 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 		table.addRow(tooltipModel);
 	}
 
-	public List<Integer> getToUserId() {
+	public List<Long> getToUserId() {
 		return toUserId;
 	}
 
-	public void setToUserId(List<Integer> toUserId) {
+	public void setToUserId(List<Long> toUserId) {
 		this.toUserId = toUserId;
 	}
 
-	public int getRoomSelected() {
+	public Long getRoomSelected() {
 		return roomSelected;
 	}
 
-	public void setRoomSelected(int roomSelected) {
+	public void setRoomSelected(Long roomSelected) {
 		this.roomSelected = roomSelected;
 	}
 }

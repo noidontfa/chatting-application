@@ -1,4 +1,4 @@
-package model;
+package model.transfer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Long id;
 	private String nickName;
 	private String username;
 	private String password;
@@ -21,17 +21,17 @@ public class User implements Serializable {
 		
 	}
 	
-	public User(int id, String nickName, String username, String password) {
+	public User(Long id, String nickName, String username, String password) {
 		this.id = id;
 		this.nickName = nickName;
 		this.username = username;
 		this.password = password;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Long i) {
+		this.id = i;
 	}
 	public String getNickName() {
 		return nickName;

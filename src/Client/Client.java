@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import model.User;
+import model.transfer.User;
 
 public class Client {
 	private static Client instance;

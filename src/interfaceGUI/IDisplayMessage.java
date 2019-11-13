@@ -1,6 +1,6 @@
 package interfaceGUI;
 
-import model.Message;
+import model.transfer.Message;
 
 public interface IDisplayMessage {
 	// hello
