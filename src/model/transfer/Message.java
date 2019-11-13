@@ -22,6 +22,7 @@ public class Message  implements Serializable{
 	private String fileName;
 	private byte []fileBytes = new byte[3145728];
 	private String commad;
+	private int toRoomId;
 	
 	public Message(int id, String msg, List<Integer> toUser, Date timeDate) {
 		this.id = id;
@@ -88,6 +89,15 @@ public class Message  implements Serializable{
 
 	public void setToUser(List<Integer> toUser) {
 		this.toUser = toUser;
+	}
+
+
+	public int getToRoomId() {
+		return toRoomId;
+	}
+
+	public void setToRoomId(int toRoomId) {
+		this.toRoomId = toRoomId;
 	}
 
 

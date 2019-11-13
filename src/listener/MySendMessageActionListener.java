@@ -17,7 +17,8 @@ public class MySendMessageActionListener implements ActionListener{
 		String msg = instance.getTxtMessage().getText();
 		List<Integer> ids = instance.getToUserId();
 		if (!ids.isEmpty()) {
-			Message messageModel = new Message(instance.getRoomSelected(),msg, ids, new Date());		
+			Message messageModel = new Message(instance.getUser().getId(),msg, ids, new Date());		
+			messageModel.setToRoomId(instance.getRoomSelected());
 			instance.displayMessage(messageModel);
 			instance.getClientHandler().sendMessage(messageModel);
 			instance.getTxtMessage().setText("");	

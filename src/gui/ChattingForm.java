@@ -214,12 +214,11 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void writeMessageToGUI(Message message) {
 		// this method receice mesage form user who is chatting with u!
 		
-		int respondentId = message.getId();
-		if (this.myRoomId == respondentId) {
+		if (this.myRoomId == message.getToRoomId()) {
 //				List<User> currentUser = this.user.getFriends().stream()
 //						.filter((u) -> u.getId() == message.getId())
 //						.collect(Collectors.toList());			
-				this.addRow(respondent.get(respondentId), message, uChat, true);
+				this.addRow(respondent.get(message.getId()), message, uChat, true);
 				this.meChat = false;
 				this.uChat = true;
 			

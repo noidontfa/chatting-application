@@ -26,7 +26,8 @@ public class MySendFileActionListener implements ActionListener {
 			try {
 				List<Integer> ids = instance.getToUserId();
 				if (!ids.isEmpty()) {
-					Message message = new Message(instance.getRoomSelected(), f, ids, new Date());				
+					Message message = new Message(instance.getUser().getId(), f, ids, new Date());		
+					message.setToRoomId(instance.getRoomSelected());
 					instance.displayMessage(message);
 					instance.getClientHandler().sendMessage(message);
 				} else {
