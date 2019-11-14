@@ -7,6 +7,13 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Map;
 
+import constant.SystemConstants;
+import database.converter.PrivateMessageConverter;
+import database.model.PrivateMessageModel;
+import database.service.IFriendService;
+import database.service.IPrivateMessageService;
+import database.service.impl.FriendService;
+import database.service.impl.PrivateMessageService;
 import model.transfer.Message;
 
 public class ServerHandler implements Runnable{
@@ -15,6 +22,10 @@ public class ServerHandler implements Runnable{
 	private ObjectOutputStream objectOutputStream;
 	
 //	DatabaseUser databaseUser = new DatabaseUser();
+	
+	private IFriendService friendService = new FriendService();
+	private IPrivateMessageService privateMessageService = new PrivateMessageService();
+	private PrivateMessageConverter privateMessageConverter = new PrivateMessageConverter();
 	
 	public ServerHandler(Socket socket) {
 		this.socket = socket;
@@ -42,13 +53,25 @@ public class ServerHandler implements Runnable{
 			try { 	
 				Map<Integer, ServerHandler> map = Server.getInstance().getOnlineUsers();
 				Message message  = (Message)objectInputStream.readObject();
-					System.out.println("Server Recieved: " + message.getMsg());		
-					List<Integer> toUserId = message.getToUser();
-					for(Integer id : toUserId) {
-						if(map.containsKey(id)) {
-							map.get(id).sendMessageToClient(message);
-						}
-					}					
+				List<Integer> toUserId = message.getToUser();
+				for(Integer id : toUserId) {
+					if(map.containsKey(id)) {
+						map.get(id).sendMessageToClient(message);
+					}
+					Long friendId =friendService.findByUserIdAndFriendUserId(Integer.valueOf(message.getId()).longValue(), id.longValue()).getId();
+					long timeDate = message.getTimeDate().getTime();
+					String msg = null;
+					if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
+						msg = message.getMsg();		
+					}
+					PrivateMessageModel privateMessageModel = privateMessageConverter.toPrivateMessageModel(friendId, msg, timeDate);
+					privateMessageService.save(privateMessageModel);
+				}		
+				
+				
+				
+					
+									
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}

@@ -87,21 +87,7 @@ public class Server extends Thread{
 			UserModel userModel = userService.findByUsernameAndPassword(user.getUsername(),user.getPassword());			
 			if (userModel != null) {
 				// we have user
-				Long userId = userModel.getId();
-				user = userConverter.toUserTransfer(userModel);
-				List<UserModel> listFriends = userService.findFriendsById(userId);
-				for(UserModel friend : listFriends) {
-					user.getFriends().add(userConverter.toUserTransfer(friend));
-				}
-				
-				List<GroupModel> listGroups = groupService.findGroupsById(userId);
-				for(GroupModel group : listGroups) {
-					List<UserModel> users = userService.findGroupUsersById(group.getId(), userId);
-					group.setListUsers(users);
-					
-					user.getGroups().add(groupConverter.toGroupTransfer(group));
-				}
-				
+				user = getFriendsAndGroups(userModel);		
 				objectOutputStream.writeObject(user);
 
 				ServerHandler clientHandler = new ServerHandler(socket);
@@ -129,6 +115,24 @@ public class Server extends Thread{
 	
 	public Map<Integer, ServerHandler> getOnlineUsers() {
 		return onlineUsers;
+	}
+	
+	private User getFriendsAndGroups(UserModel userModel) {
+		Long userId = userModel.getId();
+		User user = userConverter.toUserTransfer(userModel);
+		List<UserModel> listFriends = userService.findFriendsById(userId);
+		for(UserModel friend : listFriends) {
+			user.getFriends().add(userConverter.toUserTransfer(friend));
+		}
+		
+		List<GroupModel> listGroups = groupService.findGroupsById(userId);
+		for(GroupModel group : listGroups) {
+			List<UserModel> users = userService.findGroupUsersById(group.getId(), userId);
+			group.setListUsers(users);
+			
+			user.getGroups().add(groupConverter.toGroupTransfer(group));
+		}
+		return user;
 	}
 
 }
