@@ -63,8 +63,8 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	private DisplayJTable table;
 	private boolean meChat = false;
 	private boolean uChat = false;
-	private int roomSelected; // this variable is handled by MySelectedFriendsListener.
-	private int myRoomId; // same
+	private int roomSelected; // this variable is handled by MySelectedFriendsListener. friend or room id
+	private int myRoomId; // same user or room id
 
 	/**
 	 * Create the frame.
@@ -212,13 +212,16 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void writeMessageToGUI(Message message) {
 		// this method receice mesage form user who is chatting with u!
 		
-		if (this.myRoomId == message.getToRoomId()) {
-//				List<User> currentUser = this.user.getFriends().stream()
-//						.filter((u) -> u.getId() == message.getId())
-//						.collect(Collectors.toList());			
+		if (this.roomSelected == message.getRoomId() && this.myRoomId == message.getToRoomId()) {
+			
 				this.addRow(respondent.get(message.getId()), message, uChat, true);
 				this.meChat = false;
 				this.uChat = true;
+			
+//				List<User> currentUser = this.user.getFriends().stream()
+//						.filter((u) -> u.getId() == message.getId())
+//						.collect(Collectors.toList());			
+				
 			
 		
 		}

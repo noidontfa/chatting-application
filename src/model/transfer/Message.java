@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +15,7 @@ public class Message  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private int id; // id user
 	private String msg;
 	private List<Integer> toUser = new ArrayList<>();
 	private Date  timeDate;
@@ -25,6 +23,11 @@ public class Message  implements Serializable{
 	private byte []fileBytes = new byte[3145728];
 	private String commad;
 	private int toRoomId;
+	private int roomId; // id user or room id
+	
+	public Message() {
+		
+	}
 	
 	public Message(int id, String msg, List<Integer> toUser, Date  timeDate) {
 		this.id = id;
@@ -100,6 +103,14 @@ public class Message  implements Serializable{
 
 	public void setToRoomId(int toRoomId) {
 		this.toRoomId = toRoomId;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
 	}
 
 

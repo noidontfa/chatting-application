@@ -8,6 +8,7 @@ import java.util.List;
 
 import component.ComponentInformation;
 import gui.ChattingForm;
+import model.transfer.Message;
 
 public class MySelectedFriendActionListener extends MouseAdapter{
 
@@ -22,13 +23,17 @@ public class MySelectedFriendActionListener extends MouseAdapter{
 			ids.add(info.getUsers().get(i).getId());
 		}
 		instance.setToUserId(ids);
-		instance.setRoomSelected(info.getRoomId());
+		instance.setRoomSelected(info.getRoomId()); // friends user id
 		if(info.isPrivateChat()) {
 			instance.setMyRoomId(instance.getUser().getId());
 		} else {
 			instance.setMyRoomId(info.getRoomId());
 		}
 		// load database form Server
+		Message message = new Message();
+		message.setId(instance.getUser().getId());
+		message.setToRoomId(instance.getMyRoomId());
+		//instance.getClientHandler().sendMessage(message);
 		instance.getTable().removeAllRow();
 		
 	}

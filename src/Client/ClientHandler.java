@@ -15,6 +15,10 @@ public class ClientHandler extends Thread{
 	private ObjectInputStream objectInputStream = null;
 	private IDisplayMessage gui;
 	
+	public ClientHandler() {
+		
+	};
+	
 	public ClientHandler(Socket socket,IDisplayMessage gui,User user) {
 		this.socket = socket;
 		this.gui = gui;
@@ -51,4 +55,6 @@ public class ClientHandler extends Thread{
 			}
 		}
 	}
+
+
 }
