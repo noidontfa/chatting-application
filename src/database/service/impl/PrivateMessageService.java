@@ -1,5 +1,7 @@
 package database.service.impl;
 
+import java.util.List;
+
 import database.dao.IPrivateMessageDAO;
 import database.dao.impl.PrivateMessageDAO;
 import database.model.PrivateMessageModel;
@@ -17,6 +19,12 @@ public class PrivateMessageService implements IPrivateMessageService{
 	public Long save(PrivateMessageModel privateMessageModel) {
 	
 		return privateMessageDAO.save(privateMessageModel);
+	}
+
+	@Override
+	public List<PrivateMessageModel> findByFriendId(Long id, Long id2) {
+		
+		return privateMessageDAO.findByFriendId(id, id2);
 	}
 	
 }

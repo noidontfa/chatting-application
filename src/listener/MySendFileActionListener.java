@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +28,7 @@ public class MySendFileActionListener implements ActionListener {
 				if (!ids.isEmpty()) {
 					Message message = new Message(instance.getUser().getId(), f, ids, new Date());		
 					message.setToRoomId(instance.getRoomSelected());
+					message.setRoomId(instance.getMyRoomId());
 					instance.displayMessage(message);
 					instance.getClientHandler().sendMessage(message);
 				} else {
