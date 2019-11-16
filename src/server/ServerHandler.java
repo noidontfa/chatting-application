@@ -68,31 +68,12 @@ public class ServerHandler implements Runnable {
 					
 					List<Message> listMessages = new ArrayList<>();
 					for(PrivateMessageModel model : listModels) {
-						Message msg = new Message();
-						
-						msg.setId(userId.intValue());
-						msg.setRoomId(message.getRoomId());
-						msg.setToRoomId(message.getToRoomId());
-						List<Integer> toUserId = new ArrayList<>();
-						if(model.getFriendId() == id) {
-							toUserId.add(userId.intValue());						
-						} else {
-							toUserId.add(friendUserId.intValue());
-						}
-						msg.setToUser(toUserId);
-						if(model.getFileBytes() == null) {
-							msg.setCommad(SystemConstants.MESS_STRING);
-							msg.setMsg(model.getMsg());
-						} else {
-							msg.setCommad(SystemConstants.MESS_FILE);
-							msg.setFileName(model.getMsg());
-							msg.setFileBytes(model.getFileBytes());
-						}
-						msg.setTimeDate(model.getCreatedDate());
+						Message msg = privateMessageConverter.toPrivateMessageTransfer(id, userId, friendUserId,
+								message.getRoomId(), message.getToRoomId(), model);				
 						listMessages.add(msg);
-					}					
+					}		
+					
 					map.get(userId.intValue()).sendMessageToClient(listMessages);
-					//System.out.println(listModels.size());
 
 				} else {
 					List<Integer> toUserId = message.getToUser();

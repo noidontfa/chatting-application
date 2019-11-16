@@ -5,12 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import constant.SystemConstants;
 import model.transfer.User;
 
 public class Client {
 	private static Client instance;
-	private static final String SERVER_IP = "localhost";
-	private static final int SERVER_PORT = 9090;
 	private Socket socket = null;
 	private User user;
 	
@@ -24,7 +23,7 @@ public class Client {
 	public Client() {
 		if (socket == null) {
 			try {
-				socket = new Socket(SERVER_IP, SERVER_PORT);
+				socket = new Socket(SystemConstants.SERVER_IP, SystemConstants.SERVER_PORT);
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectInputStream = new ObjectInputStream(socket.getInputStream());
 			} catch (IOException e) {
@@ -88,7 +87,7 @@ public class Client {
 	private  void initSocket() {
 		if (socket.isClosed()) {
 			try {
-				socket = new Socket(SERVER_IP, SERVER_PORT);
+				socket = new Socket(SystemConstants.SERVER_IP, SystemConstants.SERVER_PORT);
 				objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectInputStream = new ObjectInputStream(socket.getInputStream());
 			} catch (IOException e) {

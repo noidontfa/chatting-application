@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import constant.SystemConstants;
 import database.converter.GroupConverter;
 import database.converter.UserConverter;
 import database.model.GroupModel;
@@ -23,7 +24,6 @@ import model.transfer.User;
 
 public class Server extends Thread{
 	private static Server instance;
-	private static final int PORT = 9090;
 	private ServerSocket server;
 	
 	private boolean doExecute = false;
@@ -65,7 +65,7 @@ public class Server extends Thread{
 	
 	public Server() {
 		try {
-			server = new ServerSocket(PORT);
+			server = new ServerSocket(SystemConstants.SERVER_PORT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
