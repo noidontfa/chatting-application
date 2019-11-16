@@ -1,6 +1,5 @@
 package database.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class PrivateMessageModel {
@@ -8,6 +7,7 @@ public class PrivateMessageModel {
 	private String msg;
 	private Timestamp createdDate;
 	private Long friendId;
+	private byte[] fileBytes;
 	
 	
 	
@@ -28,6 +28,12 @@ public class PrivateMessageModel {
 	}
 	public void setFriendId(Long friendId) {
 		this.friendId = friendId;
+	}
+	public byte[] getFileBytes() {
+		return fileBytes;
+	}
+	public void setFileBytes(byte[] fileBytes) {
+		this.fileBytes = fileBytes;
 	}
 	
 	

@@ -61,10 +61,14 @@ public class ServerHandler implements Runnable{
 					Long friendId =friendService.findByUserIdAndFriendUserId(Integer.valueOf(message.getId()).longValue(), id.longValue()).getId();
 					long timeDate = message.getTimeDate().getTime();
 					String msg = null;
+					byte[] fileBytes = null;
 					if(message.getCommad().equals(SystemConstants.MESS_STRING)) {
 						msg = message.getMsg();		
+					} else if(message.getCommad().equals(SystemConstants.MESS_FILE)) {
+						msg = message.getFileName();
+						fileBytes = message.getFileBytes();
 					}
-					PrivateMessageModel privateMessageModel = privateMessageConverter.toPrivateMessageModel(friendId, msg, timeDate);
+					PrivateMessageModel privateMessageModel = privateMessageConverter.toPrivateMessageModel(friendId, msg, timeDate, fileBytes);
 					privateMessageService.save(privateMessageModel);
 				}		
 				

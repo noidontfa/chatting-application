@@ -14,6 +14,7 @@ public class PrivateMessageMapper implements RowMapper<PrivateMessageModel> {
 			PrivateMessageModel privateMessageModel = new PrivateMessageModel();
 			privateMessageModel.setCreatedDate(rs.getTimestamp("createddate"));
 			privateMessageModel.setMsg(rs.getString("msg"));
+			privateMessageModel.setFileBytes(rs.getBytes("filebytes"));
 			privateMessageModel.setFriendId(rs.getLong("friend_id"));		
 			return privateMessageModel;
 		} catch (SQLException e) {
