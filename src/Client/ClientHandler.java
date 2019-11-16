@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import interfaceGUI.IDisplayMessage;
 import model.transfer.Message;
@@ -32,8 +34,7 @@ public class ClientHandler extends Thread{
 	
 	public void sendMessage(Message message) {
 		try {
-			objectOutputStream.writeObject(message);	
-									
+			objectOutputStream.writeObject(message);								
 		}
 		 catch (IOException e) {
 			e.printStackTrace();
@@ -43,9 +44,21 @@ public class ClientHandler extends Thread{
 	public void run() {
 		while(true) {
 			try {
-				Message messageModel = null;
-				messageModel = (Message)objectInputStream.readObject();			
-				gui.writeMessageToGUI(messageModel);
+				
+				@SuppressWarnings("unchecked")
+				List<Message> msgObject = (ArrayList<Message>)objectInputStream.readObject();	
+				
+				if(msgObject.size() == 1) {
+					gui.writeMessageToGUI(msgObject.get(0));
+				} else {
+					for(Message message : msgObject) {
+						if(message.getId() == message.getToUser().get(0)) {
+							gui.displayMessage(message);
+						} else {
+							gui.writeMessageToGUI(message);
+						}
+					}
+				}
 				
 				
 			

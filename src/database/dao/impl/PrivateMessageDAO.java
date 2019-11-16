@@ -11,10 +11,18 @@ public class PrivateMessageDAO extends AbstractDAO<PrivateMessageModel> implemen
 	@Override
 	public Long save(PrivateMessageModel privateMessageModel) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO _private_message (msg, createddate, filebytes, friend_id) ");
-		sql.append("VALUES (?,?,?,?) ");
-		return insert(sql.toString(), privateMessageModel.getMsg(), privateMessageModel.getCreatedDate(), 
-				privateMessageModel.getFileBytes(), privateMessageModel.getFriendId());
+		if(privateMessageModel.getFileBytes() != null) {
+			sql.append("INSERT INTO _private_message (msg, createddate, filebytes, friend_id) ");
+			sql.append("VALUES (?,?,?,?) ");
+			return insert(sql.toString(), privateMessageModel.getMsg(), privateMessageModel.getCreatedDate(), 
+					privateMessageModel.getFileBytes(), privateMessageModel.getFriendId());
+		} else {
+			sql.append("INSERT INTO _private_message (msg, createddate, friend_id) ");
+			sql.append("VALUES (?,?,?) ");
+			return insert(sql.toString(), privateMessageModel.getMsg(), privateMessageModel.getCreatedDate(), 
+					 privateMessageModel.getFriendId());
+		}
+		
 	}
 
 	@Override

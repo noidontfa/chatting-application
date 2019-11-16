@@ -2,6 +2,9 @@ package component;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -38,13 +41,18 @@ public class DisplayJTable extends JTable {
 		this.setTableHeader(null);
 		this.setDefaultRenderer(Object.class, new MyRender());
 		this.setBackground(Color.WHITE);
-
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {		
+				autoScroll();
+			}
+		});
 		// table.setRowHeight(80);
 
 		tableModel = (DefaultTableModel) this.getModel();
 
 		tableModel.setColumnCount(1);
-
+		
 	}
 	
 	public void removeAllRow() {
@@ -55,6 +63,7 @@ public class DisplayJTable extends JTable {
 
 	public void addRow(TooltipModel tooltipModel) {
 		tableModel.addRow(new Object[] { tooltipModel });
+		
 	}
 
 	public class MyRender implements TableCellRenderer {
@@ -82,6 +91,10 @@ public class DisplayJTable extends JTable {
 		}
 		
 
+	}
+	
+	private void autoScroll() {
+		this.scrollRectToVisible(this.getCellRect(this.getRowCount() - 1 , 0, true));
 	}
 
 }

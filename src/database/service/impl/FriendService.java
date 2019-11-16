@@ -15,8 +15,8 @@ public class FriendService implements IFriendService {
 	}
 	
 	@Override
-	public FriendModel findByUserIdAndFriendUserId(Long userId, Long FriendUserId) {	
-		return friendDAO.findByUserIdAndFriendUserId(userId, FriendUserId);
+	public FriendModel findByUserIdAndFriendUserId(Long userId, Long friendUserId) {	
+		return friendDAO.findByUserIdAndFriendUserId(userId, friendUserId);
 	}
 
 }
