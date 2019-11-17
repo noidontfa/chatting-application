@@ -55,6 +55,12 @@ ALTER TABLE _group_message ADD CONSTRAINT fk_group_message_group_id FOREIGN KEY 
 
 ALTER TABLE _private_message 
 ADD COLUMN filebytes LONGBLOB NULL AFTER createddate; 
+
+ALTER TABLE _group_message 
+ADD COLUMN filebytes LONGBLOB NULL AFTER createddate;
+
+ALTER TABLE _group_message 
+ADD COLUMN user_id BIGINT NULL AFTER filebytes;
     
 
 

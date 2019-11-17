@@ -24,7 +24,6 @@ public class Message  implements Serializable{
 	private String commad;
 	private int toRoomId;
 	private int roomId; // id user or room id
-	
 	public Message() {
 		
 	}

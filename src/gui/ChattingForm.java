@@ -273,4 +273,22 @@ public class ChattingForm extends JFrame implements IDisplayMessage {
 	public void setRoomSelected(int roomSelected) {
 		this.roomSelected = roomSelected;
 	}
+
+	public boolean isMeChat() {
+		return meChat;
+	}
+
+	public void setMeChat(boolean meChat) {
+		this.meChat = meChat;
+	}
+
+	public boolean isuChat() {
+		return uChat;
+	}
+
+	public void setuChat(boolean uChat) {
+		this.uChat = uChat;
+	}
+	
+	
 }

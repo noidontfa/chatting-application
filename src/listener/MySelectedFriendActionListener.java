@@ -34,16 +34,15 @@ public class MySelectedFriendActionListener extends MouseAdapter {
 				msgLoadding.setCommad(SystemConstants.MESS_GROUP_LOADDING);
 			}
 			// load database form Server
-			if (msgLoadding.getCommad().equals(SystemConstants.MESS_PRIVATE_LOADDING)) {
-				msgLoadding.setId(instance.getUser().getId());
-				msgLoadding.setToUser(ids);
-
-			}
+			msgLoadding.setId(instance.getUser().getId());
+			msgLoadding.setToUser(ids);
 
 			msgLoadding.setRoomId(instance.getRoomSelected());
 			msgLoadding.setToRoomId(instance.getMyRoomId());
 
 			instance.getClientHandler().sendMessage(msgLoadding);
+			instance.setMeChat(false);
+			instance.setuChat(false);
 			instance.getTable().removeAllRow();
 		}
 
