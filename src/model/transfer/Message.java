@@ -20,7 +20,7 @@ public class Message  implements Serializable{
 	private List<Integer> toUser = new ArrayList<>();
 	private Date  timeDate;
 	private String fileName;
-	private byte []fileBytes = new byte[3145728];
+	private byte []fileBytes;
 	private String commad;
 	private int toRoomId;
 	private int roomId; // id user or room id

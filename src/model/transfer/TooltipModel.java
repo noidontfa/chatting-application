@@ -6,7 +6,7 @@ public class TooltipModel {
 	private String msg;
 	private String time;
 	private boolean fileTransfer = false;
-	private byte []fileBytes = new byte[3145728];
+	private byte []fileBytes;
 	private boolean left = true;
 	private boolean hideImage = true;
 	
