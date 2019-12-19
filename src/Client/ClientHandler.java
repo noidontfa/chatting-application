@@ -47,18 +47,21 @@ public class ClientHandler extends Thread{
 				
 				@SuppressWarnings("unchecked")
 				List<Message> msgObject = (ArrayList<Message>)objectInputStream.readObject();	
-				
-				if(msgObject.size() == 1) {
-					gui.writeMessageToGUI(msgObject.get(0));
-				} else {
-					for(Message message : msgObject) {
-						if(message.getId() == message.getToUser().get(0)) {
-							gui.displayMessage(message);
-						} else {
-							gui.writeMessageToGUI(message);
+				if(msgObject.size() >= 1) {
+					if(msgObject.size() == 1) {
+						gui.writeMessageToGUI(msgObject.get(0));
+						gui.showMessageInfo(msgObject.get(0));
+					} else {
+						for(Message message : msgObject) {
+							{
+								gui.writeMessageToGUI(message);
+								//gui.displayMessage(message);
+							}
 						}
+						gui.showMessageInfo(msgObject.get(msgObject.size()-1));
 					}
 				}
+				
 				
 				
 			

@@ -95,13 +95,13 @@ public class LoginForm extends JFrame {
 	
 		txtUserName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtUserName.setColumns(10);
-		
+		txtUserName.addActionListener(new MyLoginActionListener());
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setBorder(new MatteBorder(0, 0, 1, 0, (Color) SystemColor.desktop));
-		
+		txtPassword.addActionListener(new MyLoginActionListener());
 		JButton btnNewButton = new JButton();
 		btnNewButton.setText("Sign In");
 		btnNewButton.addActionListener(new MyLoginActionListener());

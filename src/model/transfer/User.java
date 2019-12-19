@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 public class User implements Serializable {
 	/**
 	 * 
@@ -16,6 +18,8 @@ public class User implements Serializable {
 	private List<User> friends = new ArrayList<>();
 	private List<Group> groups = new ArrayList<>();
 	private boolean isAuthenticated = false;
+	private JLabel image;
+	private JLabel imageChatting;
 	
 	public User() {
 		
@@ -72,6 +76,26 @@ public class User implements Serializable {
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
 	}
+
+	public JLabel getImage() {
+		return image;
+	}
+
+	public void setImage(JLabel image) {
+		this.image = image;
+	}
+
+	public JLabel getImageChatting() {
+		return imageChatting;
+	}
+
+	public void setImageChatting(JLabel imageChatting) {
+		this.imageChatting = imageChatting;
+	}
+
+
+
+
 
 	
 	

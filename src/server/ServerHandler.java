@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -69,20 +70,24 @@ public class ServerHandler implements Runnable {
 					List<Message> lists = getGroupChatFromDatabase(message);
 					map.get(message.getId()).sendMessageToClient(lists);
 				} else {
+					
 					List<Integer> toUserId = message.getToUser();
-					for (Integer id : toUserId) {
-						if (map.containsKey(id)) {
-							List<Message> messages = new ArrayList<Message>();
-							messages.add(message);
-							map.get(id).sendMessageToClient(messages);
-						}
-					}
-					int size = toUserId.size();
+					int size = toUserId.size()-1;
 					if (size == 1) {
 						savePrivateMessage(message);
 					} else {
 						saveGroupMessage(message);
+					}		
+					
+					for (Integer id : toUserId) {
+						if (map.containsKey(id)) {
+							List<Message> messages = new ArrayList<>();				
+							message.setToUser(Arrays.asList(id));
+							messages.add(message);
+							map.get(id).sendMessageToClient(messages);
+						}
 					}
+					
 
 				}
 
@@ -103,6 +108,9 @@ public class ServerHandler implements Runnable {
 		for (PrivateMessageModel model : listModels) {
 			Message msg = privateMessageConverter.toPrivateMessageTransfer(id, userId, friendUserId,
 					message.getRoomId(), message.getToRoomId(), model);
+			int idid = msg.getId();
+			msg.setId(msg.getToUser().get(0));
+			msg.setToUser(Arrays.asList(idid));
 			listMessages.add(msg);
 		}
 		return listMessages;
@@ -114,8 +122,13 @@ public class ServerHandler implements Runnable {
 		List<Message> listMessages = new ArrayList<>();
 		for (GroupMessageModel model : listModels) {
 			Message msg = groupMessageConverter.toMessageTransfer(message.getId(), model);
+			int idid = msg.getId();
+			msg.setId(msg.getToUser().get(0));
+			msg.setToUser(Arrays.asList(idid));
 			listMessages.add(msg);
 		}
+		
+		
 		return listMessages;
 
 	}

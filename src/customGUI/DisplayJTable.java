@@ -1,4 +1,4 @@
-package component;
+package customGUI;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import model.transfer.TooltipModel;
+
 
 public class DisplayJTable extends JTable {
 	/**
@@ -60,8 +60,8 @@ public class DisplayJTable extends JTable {
 		}
 	}
 
-	public void addRow(TooltipModel tooltipModel) {
-		tableModel.addRow(new Object[] { tooltipModel });
+	public void addRow(ChattingOutputGUI chattingOutputGUI) {
+		tableModel.addRow(new Object[] { chattingOutputGUI });
 		
 	}
 
@@ -75,19 +75,18 @@ public class DisplayJTable extends JTable {
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
+			ChattingOutputGUI chattingOutputGUI = (ChattingOutputGUI)value;
+
 			
-			TooltipModel tooltipModel = (TooltipModel) value;
+			//JLabel label = new JLabel();
+			//label.setText(chatOutputModel.getName() + ": " + chatOutputModel.getMsg());
+		
+			//panel.add(chattingOutputGUI2,BorderLayout.CENTER);
 			
-			Tooltip tooltip = new Tooltip();
-			if (tooltipModel.isLeft()) {
-				tooltip.displayLeft(tooltipModel);
-			} else {
-				tooltip.displayRight(tooltipModel);
-			}
-			
-			table.setRowHeight(row, tooltip.getHeight() + 9);
-			return tooltip;
+			table.setRowHeight(row, chattingOutputGUI.getHeight());
+			return chattingOutputGUI;
 		}
+		
 		
 
 	}
